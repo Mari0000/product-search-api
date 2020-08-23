@@ -23,7 +23,7 @@ RSpec.describe 'Products API', type: :request do
      # Test suite for GET /products search by name
   describe 'GET /products?' do
     # make HTTP get request before each example
-    before { get "/products?name=#{product.arabic_name}" }
+    before { get "/products?name=#{product.english_name}" }
 
     it 'returns products' do
       # Note `json` is a custom helper to parse JSON responses
