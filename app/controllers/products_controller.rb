@@ -1,14 +1,19 @@
 class ProductsController < ApplicationController
     def index 
-        @products = Product.where(nil)
-        filtering_params(params).each do |key, value|
-            @products = @products.public_send("filter_by_#{key}", value) if value.present?
+        @products = Product.all
+        if check_language(params) 
+            @products = Product.filter_by_arabic_name(params[:name]) if params[:name].present?
+        else 
+            @products = Product.filter_by_english_name(params[:name]) if params[:name].present?
         end
         render json: @products
     end 
 
-    # A list of the param names that can be used for filtering the Product list
-    def filtering_params(params)
-        params.slice(:arabic_name, :english_name)
+    def check_language(params)
+        if params[:name] =~ /\p{Arabic}/ 
+            return true
+        else 
+            return false
+        end
     end
 end
