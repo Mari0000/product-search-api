@@ -2,9 +2,9 @@ class ProductsController < ApplicationController
     def index 
         @products = Product.all
         if check_language(params) 
-            @products = Product.filter_by_arabic_name(params[:name]) if params[:name].present?
+            @products = @products.filter_by_arabic_name(params[:name]) if params[:name].present?
         else 
-            @products = Product.filter_by_english_name(params[:name]) if params[:name].present?
+            @products = @products.filter_by_english_name(params[:name]) if params[:name].present?
         end
         render json: @products
     end 
